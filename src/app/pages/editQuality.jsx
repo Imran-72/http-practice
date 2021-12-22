@@ -12,11 +12,24 @@ const EditQualityPage = () => {
     setQuality(data.content);
   }, []);
 
-  const handeleSubmit = (data) => {
-    axios
-      .put(qualityEndPoint, data)
-      .then((res) => console.log(res.data.content));
+  const handeleSubmit = async (data) => {
+    try {
+      await axios
+        .put(qualityEndPoint, data)
+        .then((res) => console.log(res.data.content));
+    } catch (error) {
+      const expextedErrors =
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status < 500;
+      if (!expextedErrors) {
+        console.log("Unexpected error");
+      } else {
+        console.log("Expected error");
+      }
+    }
   };
+
   return (
     <>
       <h1>Edit Quality Page</h1>
