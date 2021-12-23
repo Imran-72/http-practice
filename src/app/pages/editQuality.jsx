@@ -1,26 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import EditForm from "../components/ui/editForm";
-import httpServise from "../services/httpService";
-import config from "../config.json";
+import { toast } from "react-toastify";
+import qualityService from "../services/qualityService";
 
 const EditQualityPage = () => {
   const [quality, setQuality] = useState(null);
   const id = useParams().id;
-  const qualityEndPoint = `quality/${id}`;
-  const handeleSubmit = async (data) => {
+
+  const updateQuality = async (content) => {
     try {
-      await httpServise
-        .put(qualityEndPoint, data)
-        .then((res) => console.log(res.data.content));
+      const data = await qualityService.update(id, content);
+      return data.content;
     } catch (error) {
-      console.log("Expected error");
+      const { message, code } = error.response.data;
+      toast.error(message);
     }
   };
 
-  useEffect(async () => {
-    const { data } = await httpServise.get(qualityEndPoint);
-    setQuality(data.content);
+  const getQuality = async () => {
+    try {
+      const data = await qualityService.get(id);
+      return data;
+    } catch (error) {
+      const { message, code } = error.response.data;
+      toast.error(message);
+    }
+  };
+
+  const handeleSubmit = (data) => {
+    updateQuality(data);
+  };
+
+  useEffect(() => {
+    getQuality(id).then((data) => setQuality(data.content));
   }, []);
 
   return (
