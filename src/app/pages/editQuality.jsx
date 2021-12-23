@@ -10,7 +10,7 @@ const EditQualityPage = () => {
   const handeleSubmit = async (data) => {
     try {
       await httpServise
-        .put(qualityEndPoint + "dee", data)
+        .put(qualityEndPoint, data)
         .then((res) => console.log(res.data.content));
     } catch (error) {
       console.log("Expected error");
