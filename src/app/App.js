@@ -1,5 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Container from "./components/common/container";
 import NavBar from "./components/ui/NavBar";
 import routes from "./routes";
@@ -19,6 +21,7 @@ function App() {
           <Redirect to="/" />
         </Switch>
       </Container>
+      <ToastContainer />
     </div>
   );
 }
