@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import qualityService from "../services/qualityService";
 
 const QualityContext = createContext();
@@ -22,13 +21,35 @@ export const QualityProvider = ({ children }) => {
       } catch (e) {
         const { message } = e.response.data;
         setError(message);
-        toast.error(error);
       }
     };
     getQualities();
   }, []);
+
+  const getQuality = (id) => {
+    return qualities && qualities.find((q) => q._id === id);
+  };
+
+  const updateQuality = async ({ _id: id, ...data }) => {
+    try {
+      const { content } = await qualityService.update(id, data);
+      setQualities((prev) =>
+        prev.map((item) => {
+          if (item._id === content._id) {
+            return content;
+          }
+          return item;
+        })
+      );
+      return content;
+    } catch (error) {
+      const { message } = error;
+      setError(message);
+    }
+  };
+
   return (
-    <QualityContext.Provider value={{ qualities, isLoading }}>
+    <QualityContext.Provider value={{ qualities, getQuality, updateQuality }}>
       {!isLoading ? children : <h1>Qualities Loading...</h1>}
     </QualityContext.Provider>
   );
