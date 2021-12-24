@@ -1,9 +1,10 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Container from "./components/common/container";
 import NavBar from "./components/ui/NavBar";
+import { QualityProvider } from "./hooks/useQualities";
 import routes from "./routes";
 const getRoutes = (routes) => {
   return routes.map((prop, key) => {
@@ -15,12 +16,14 @@ function App() {
   return (
     <div className="App">
       <NavBar routes={routes} />
-      <Container>
-        <Switch>
-          {getRoutes(routes)}
-          <Redirect to="/" />
-        </Switch>
-      </Container>
+      <QualityProvider>
+        <Container>
+          <Switch>
+            {getRoutes(routes)}
+            <Redirect to="/" />
+          </Switch>
+        </Container>
+      </QualityProvider>
       <ToastContainer />
     </div>
   );
