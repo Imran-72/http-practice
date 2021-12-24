@@ -1,12 +1,12 @@
 import React from "react";
-import CreateForm from "../components/ui/createForm";
+import QualityForm from "../components/ui/qualityForm";
 const AddQualityPage = () => {
-    return (
-        <>
-            <h1>Add Quality</h1>
-            <CreateForm />
-        </>
-    );
+  return (
+    <>
+      <h1>Add Quality</h1>
+      <QualityForm />
+    </>
+  );
 };
 
 export default AddQualityPage;
