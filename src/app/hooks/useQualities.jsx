@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import qualityService from "../services/qualityService";
 
 const QualityContext = createContext();
@@ -19,8 +20,7 @@ export const QualityProvider = ({ children }) => {
         setQualities(content);
         setLoading(false);
       } catch (e) {
-        const { message } = e.response.data;
-        setError(message);
+        errorCatcher(e);
       }
     };
     getQualities();
@@ -42,9 +42,8 @@ export const QualityProvider = ({ children }) => {
         })
       );
       return content;
-    } catch (error) {
-      const { message } = error.response.data;
-      setError(message);
+    } catch (e) {
+      errorCatcher(e);
     }
   };
 
@@ -54,8 +53,7 @@ export const QualityProvider = ({ children }) => {
       setQualities((prev) => [...prev, content]);
       return content;
     } catch (e) {
-      const { message } = error.response.data;
-      setError(message);
+      errorCatcher(e);
     }
   };
 
@@ -65,10 +63,22 @@ export const QualityProvider = ({ children }) => {
       setQualities((prev) => prev.filter((item) => item._id !== content._id));
       return content;
     } catch (e) {
-      const { message } = error.response.data;
-      setError(message);
+      errorCatcher(e);
     }
   };
+
+  function errorCatcher(e) {
+    const { message } = e.response.data;
+    setError(message);
+  }
+
+  useEffect(() => {
+    if (error !== null) {
+      toast.error(error);
+      setError(null);
+    }
+  }, [error]);
+
   return (
     <QualityContext.Provider
       value={{
