@@ -22,6 +22,10 @@ const qualityService = {
     const { data } = await httpServise.post(qualityEndpoint, content);
     return data;
   },
+  delete: async (id) => {
+    const { data } = await httpServise.delete(qualityEndpoint + id);
+    return data;
+  },
 };
 
 export default qualityService;
