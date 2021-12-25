@@ -1,10 +1,16 @@
 import React from "react";
 import QualityForm from "../components/ui/qualityForm";
+import { useQualities } from "../hooks/useQualities";
 const AddQualityPage = () => {
+  const { addQuality } = useQualities();
+
+  const handleSubmit = (data) => {
+    addQuality(data);
+  };
   return (
     <>
       <h1>Add Quality</h1>
-      <QualityForm />
+      <QualityForm onSubmit={handleSubmit} />
     </>
   );
 };

@@ -17,6 +17,11 @@ const qualityService = {
     const { data } = await httpServise.get(qualityEndpoint);
     return data;
   },
+
+  create: async (content) => {
+    const { data } = await httpServise.post(qualityEndpoint, content);
+    return data;
+  },
 };
 
 export default qualityService;
