@@ -26,4 +26,10 @@ const httpServise = {
   delete: axios.delete,
 };
 
+const httpServise1 = {
+  get: axios.get,
+  post: axios.post,
+  put: axios.put,
+  delete: axios.delete,
+};
 export default httpServise;
